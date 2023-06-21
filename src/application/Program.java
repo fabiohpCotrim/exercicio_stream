@@ -17,7 +17,7 @@ public class Program {
 		Locale.setDefault(Locale.US);
 		Scanner sc = new Scanner(System.in);
 
-		System.out.println("Enter full file path: ");
+		System.out.print("Enter full file path: ");
 		String path = sc.nextLine();
 
 		try (BufferedReader br = new BufferedReader(new FileReader(path))) {
@@ -30,6 +30,14 @@ public class Program {
 				list.add(new Product(fields[0], Double.parseDouble(fields[1])));
 				line = br.readLine();
 			}
+			
+			double avg = list.stream()
+					.map(p -> p.getPrice())
+					.reduce(0.0, (x,y) -> x + y) / list.size();
+			
+			System.out.println("Average price: " + String.format("%.2f", avg));
+			
+			
 		} catch (IOException e) {
 			System.out.println("Error: " + e.getMessage());
 		}
